@@ -1,0 +1,28 @@
+html, body { margin:0; padding:0; overflow:hidden }
+svg {   height: 100%; width:100% }
+  
+  #container {
+    /* width: 100vw;
+    height: 100vh; */
+    cursor: grab;
+    overflow: hidden; /* コンテナ内のスクロールを隠す */
+  }
+  
+  #content {
+    width: 1960px; 必要に応じて大きさを調整
+    /* height: 2000px; */
+    background-color: lightgray;
+  }
+  img{
+    -webkit-user-drag: none;
+  }
+
+  .panzoom path:hover {
+	cursor:pointer;
+	fill: #e6f7f7;
+	stroke: #87caca;
+}
+
+.panzoom path.selected {
+	fill: #009494;
+}
