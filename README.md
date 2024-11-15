@@ -1,3 +1,2 @@
 # Smart-Road
-nantoka
-被害者の会会長
+卒業作品
