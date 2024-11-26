@@ -1,28 +1,724 @@
-html, body { margin:0; padding:0; overflow:hidden }
-svg {   height: 100%; width:100% }
-  
-  #container {
-    /* width: 100vw; */
-    height: 100vh;
-    cursor: grab;
-    overflow: hidden; /* コンテナ内のスクロールを隠す */
-  }
-  
-  #content {
-    width: 1960px; 
-    /* height: 2000px; */
-    background-color: lightgray;
-  }
-  img{
-    -webkit-user-drag: none;
-  }
-
-  .panzoom path:hover {
-	cursor:pointer;
-	fill: #e6f7f7;
-	stroke: #87caca;
+.title-xs {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
-.panzoom path.selected {
-	fill: #009494;
+.text-s {
+  /* text/text-S */
+  font-family: "Noto Sans JP";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+  /* 162.5% */
+  letter-spacing: 1.6px;
+}
+
+.text-xs {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 23px;
+  /* 176.923% */
+  letter-spacing: 1.3px;
+}
+
+.decoration-xs {
+  color: #13B9F1;
+  font-family: "Josefin Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* ページ全体のスクロールを無効化 */
+}
+
+h3 {
+  font-size: 16px;
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #13B9F1;
+}
+
+
+
+
+/* 全体リセット */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+/* モーダルのスタイル */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  width: 656px;
+  height: 90%;
+  display: flex;
+  padding: 32px 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--margin-margin-M, 32px);
+  flex-shrink: 0;
+  background-color: #E2E3E5;
+  border-radius: 32px;
+  animation: fadeIn 0.5s;
+}
+
+/* ロゴ */
+.logo {
+  width: 60%;
+  margin: 0 auto 20px;
+}
+
+/* タイトルと装飾 */
+.tutorial-title .decoration {
+  color: #13b9f1;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+}
+
+.tutorial-title .title {
+  color: #4C566C;
+  /* PC-title/title-L */
+  font-family: "Noto Sans JP";
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-align: center;
+
+}
+
+/* テキスト */
+.tutorial-text {
+  color: #4C566C;
+  width: 80%;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+  /* 162.5% */
+  letter-spacing: 1.6px;
+}
+
+/* ボタン */
+.tutorial-button {
+  font-family: "Noto Sans JP";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin-top: auto;
+  color: #fff;
+  background-color: #13b9f1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tutorial-button:hover {
+  background-color: #0fa0d1;
+}
+
+.tutorial-button span {
+  margin-left: 5px;
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+
+/* ナビゲーションバーの基本スタイル */
+.navbar {
+  width: 18vw;
+  height: 95vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  background: #E2E3E5;
+  border-right: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 32px;
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transform: translateX(0);
+  /* 初期位置 */
+  transition: transform 0.5s ease;
+  /* スライドアニメーション */
+}
+
+.navbar {
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefoxでスクロールバーを非表示 */
+}
+
+.navbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safariでスクロールバーを非表示 */
+}
+
+/* 非表示にする時、左にスライドして消える */
+.navbar.hidden {
+  transform: translateX(-100%);
+}
+
+.navbar img {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.navbar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.road-inner {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.road-toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 16px;
+  background: #E2E3E5;
+  box-shadow: 5px 5px 4px #d4d5d7, -5px -5px 4px #f0f1f3;
+  transition: 0.2s;
+  text-align: center;
+  font-family: "Josefin Sans";
+  font-size: 20px;
+  font-weight: 700;
+  color: #13B9F1;
+}
+
+.road-toggle-btn:hover {
+  box-shadow: -5px -5px 4px #d4d5d7, 5px 5px 4px #f0f1f3;
+}
+
+/* トグルボタンの基本スタイル */
+button#toggle-nav {
+  width: 300px;
+  height: 300px;
+  font-size: 64px;
+  position: absolute;
+  top: 3660px;
+  left: 7310px;
+  z-index: 60;
+  padding: 10px 20px;
+  background-color: #13B9F1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* トグルボタンのホバー時のスタイル */
+button#toggle-nav:hover {
+  background-color: #0fa0d1;
+}
+
+#zoom-level {
+  width: 156px;
+  height: 50px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  vertical-align: bottom;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: right;
+  font-family: "Josefin Sans";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #13B9F1;
+  box-shadow: 5px 5px 4px #d4d5d7,
+    -5px -5px 4px #f0f1f3;
+}
+
+#opacity-level {
+  width: 156px;
+  height: 50px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  vertical-align: bottom;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: right;
+  font-family: "Josefin Sans";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #13B9F1;
+  box-shadow: 5px 5px 4px #d4d5d7,
+    -5px -5px 4px #f0f1f3;
+}
+
+#container {
+  position: relative;
+  z-index: 1;
+  /* margin-left: 200px; ナビゲーションの幅を考慮 */
+  width: 100vw;
+  /* ナビゲーションを除いた幅 */
+  height: 100vh;
+  cursor: grab;
+  overflow: hidden;
+  /* コンテナ内のスクロールを隠す */
+}
+
+#content {
+  height: auto;
+  background-color: lightgray;
+  transform-origin: top left;
+  /* 拡大・縮小の基準点を左上に設定 */
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+.navbar__zoom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.zoom-inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar__zoom-left {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.navbar__zoom-right {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zoom-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  /* 枠線をなくす */
+  border-radius: 16px;
+  border-radius: 16px;
+  background: #E2E3E5;
+  box-shadow: 5px 5px 4px #d4d5d7,
+    -5px -5px 4px #f0f1f3;
+  transition: 0.2s;
+}
+
+.button:hover {
+  border-radius: 16px;
+  background: #E2E3E5;
+  box-shadow: -5px -5px 4px #d4d5d7,
+    5px 5px 4px #f0f1f3;
+}
+
+.zoom-gage {
+  appearance: none;
+  width: 8px;
+  height: 132px;
+  border-radius: 4px;
+  background: linear-gradient(0deg, #13b9f1 0%, #696A6C 0%);
+  box-shadow: 5px 5px 4px #d4d5d7,
+    -5px -5px 4px #f0f1f3;
+  writing-mode: vertical-rl;
+  direction: rtl;
+  cursor: pointer;
+}
+
+/* ツマミ：Chrome, Safari, Edge用 */
+.zoom-gage::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background: #13b9f1;
+  box-shadow: none;
+}
+
+/* ツマミ：Firefox用 */
+.zoom-gage::-moz-range-thumb {
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  background: #13b9f1;
+  box-shadow: none;
+}
+
+.background {
+  width: 16285px;
+  height: 9918px;
+  background-color: #13b9f1;
+  position: relative;
+}
+
+.layer-building {
+  position: absolute;
+  z-index: 50;
+  right: 850px;
+  top: 382px;
+}
+
+.road-layers-container {
+  width: 15085.37px;
+  position: absolute;
+  z-index: 1;
+  right: 589.815px;
+  top: 514.002px;
+}
+
+.road-layer {
+  width: 15085.37px;
+  position: absolute;
+  z-index: 1;
+  right: 589.815px;
+  top: 514.002px;
+}
+
+
+#card-container {
+  position: fixed;
+  z-index: 99;
+  bottom: 20px;
+  right: 20px;
+  width: 375px;
+  height: 375px;
+}
+
+.card {
+  width: 375px;
+  height: 375px;
+  background: #E2E3E5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: "Josefin Sans";
+  position: absolute;
+  border-radius: 16px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease;
+  /* スライドアニメーション */
+  transform: translateX(0);
+  /* 初期位置 */
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.card-text-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.card-inner {
+  padding: 16px;
+  display: flex;
+  width: 370px;
+  min-height: 370px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card.hidden {
+  transform: translateX(100%);
+  /* 非表示時は右にスライドアウト */
+}
+
+
+#card-actions {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-toggle-btn {
+  width: 100px;
+  height: 100px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #009EDB;
+  /* 初期状態のアイコン色 */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.card-toggle-btn svg path {
+  transition: fill 0.3s ease;
+  /* ホバー時の色変更アニメーション */
+}
+
+.card-toggle-btn:hover {
+  transform: scale(1.1);
+  /* ホバー時に少し拡大 */
+  color: #FCFDFF;
+  /* ホバー時のアイコン色（白） */
+}
+
+.card-toggle-btn:hover svg path:first-child {
+  fill: #FCFDFF;
+  /* ホバー時、背景のパスを白に */
+}
+
+.position01 {
+  position: absolute;
+  left: 7210px;
+  top: 3428px;
+  z-index: 99;
+}
+
+.position02 {
+  position: absolute;
+  left: 8651.237px;
+  top: 2959px;
+  z-index: 99;
+}
+
+.position03 {
+  position: absolute;
+  left: 1441.885px;
+  top: 5171.132px;
+  z-index: 99;
+}
+
+.position04 {
+  position: absolute;
+  left: 5607px;
+  top: 7702.264px;
+  z-index: 99;
+}
+
+.position05 {
+  position: absolute;
+  left: 11450.264px;
+  z-index: 99;
+  top: 6155.264px;
+}
+
+.position06 {
+  position: absolute;
+  left: 2757px;
+  top: 3528px;
+  z-index: 99;
+}
+
+.position07 {
+  position: absolute;
+  left: 4325.655px;
+  top: 5171.132px;
+  z-index: 99;
+}
+
+.position08 {
+  position: absolute;
+  left: 10108.264px;
+  top: 2178px;
+  z-index: 99;
+}
+
+.position09 {
+  position: absolute;
+  left: 5607px;
+  top: 4052px;
+  z-index: 99;
+}
+
+.position10 {
+  position: absolute;
+  left: 6013px;
+  top: 4364px;
+  z-index: 99;
+}
+
+.position11 {
+  position: absolute;
+  left: 8898.264px;
+  top: 4435px;
+  z-index: 99;
+}
+
+
+.position12 {
+  position: absolute;
+  left: 2739px;
+  top: 4068px;
+  z-index: 99;
+}
+
+.position13 {
+  position: absolute;
+  left: 10230.264px;
+  top: 5483.264px;
+  z-index: 99;
+}
+
+.position14 {
+  position: absolute;
+  left: 10905.264px;
+  top: 5677.264px;
+  z-index: 99;
+}
+
+.position15 {
+  position: absolute;
+  left: 9390.264px;
+  top: 2647px;
+  z-index: 99;
+}
+
+.position16 {
+  position: absolute;
+  left: 3181px;
+  top: 6367.264px;
+  z-index: 99;
+}
+
+.position17 {
+  position: absolute;
+  left: 7634px;
+  top: 3216px;
+  z-index: 99;
+}
+
+.position18 {
+  position: absolute;
+  left: 7440px;
+  top: 8712.264px;
+  z-index: 99;
+}
+
+.position19 {
+  position: absolute;
+  left: 8615.264px;
+  top: 2335px;
+  z-index: 99;
+}
+
+.position20 {
+  position: absolute;
+  left: 10432.264px;
+  top: 3059px;
+  z-index: 99;
+}
+
+.position21 {
+  position: absolute;
+  left: 8633.264px;
+  top: 3740px;
+  z-index: 99;
+}
+
+.position22 {
+  position: absolute;
+  left: 5589px;
+  top: 6101.264px;
+  z-index: 99;
+}
+
+.position23 {
+  position: absolute;
+  left: 4014px;
+  top: 3778px;
+  z-index: 99;
 }
